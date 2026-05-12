@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = "user")
+@ToString(exclude = {"user", "manager"})
 public class UserProfile {
     @Column
     @Id
@@ -48,8 +48,16 @@ public class UserProfile {
     private LocalDateTime updatedAt;
 
     @JsonIgnore
-    @OneToOne(mappedBy = "userProfile",fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "userProfile", fetch = FetchType.LAZY)
     private User user;
 
+    /**
+     * The manager responsible for approving this employee's leave requests.
+     * Self-referencing relationship — any profile can be another profile's manager.
+     * Nullable: employees without an assigned manager cannot have their requests approved.
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "manager_id")
+    private UserProfile manager;
 
 }
