@@ -45,7 +45,7 @@ public class User {
     @NotBlank(message = "Password is required")
     private String password;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "profile_id", referencedColumnName = "id")
     private UserProfile userProfile;
 
