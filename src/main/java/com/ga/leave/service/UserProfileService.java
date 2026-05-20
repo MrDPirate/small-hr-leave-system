@@ -110,6 +110,10 @@ public class UserProfileService {
                 .orElseThrow(() -> new InformationNotFoundException(
                         "Manager profile with id " + request.getManagerId() + " not found"));
 
+        if (employeeProfile.getId().equals(managerProfile.getId())) {
+            throw new IllegalArgumentException("An employee cannot be assigned as their own manager");
+        }
+
         employeeProfile.setManager(managerProfile);
         UserProfile updated = userProfileRepository.save(employeeProfile);
         log.info("Assigned manager id={} to employee profile id={}", managerProfile.getId(), profileId);
