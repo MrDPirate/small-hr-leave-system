@@ -1,0 +1,442 @@
+{
+  "info": {
+    "_postman_id": "leave-management-api-v1",
+    "name": "Leave Management API",
+    "description": "Complete collection for the Leave Management System REST API.\n\nSetup:\n1. Import this collection into Postman.\n2. Set the `baseUrl` collection variable to `http://localhost:8080`.\n3. Run the Login request — the JWT is automatically saved to `{{token}}`.\n4. All subsequent requests use `Bearer {{token}}` via the collection-level Authorization.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/auth/register", "host": ["{{baseUrl}}"], "path": ["api","v1","auth","register"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userName\": \"newuser\",\n  \"emailAddress\": \"newuser@example.com\",\n  \"password\": \"Password1!\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Login as Khalil (Admin)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var json = pm.response.json();",
+                  "if (json && json.data && json.data.token) {",
+                  "    pm.collectionVariables.set('token', json.data.token);",
+                  "    console.log('JWT saved to {{token}}');",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/auth/login", "host": ["{{baseUrl}}"], "path": ["api","v1","auth","login"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"khalil.ak.bh1170@gmail.com\",\n  \"password\": \"Admin123!\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Login as Hasan (Employee)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var json = pm.response.json();",
+                  "if (json && json.data && json.data.token) {",
+                  "    pm.collectionVariables.set('token', json.data.token);",
+                  "    console.log('JWT saved to {{token}}');",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/auth/login", "host": ["{{baseUrl}}"], "path": ["api","v1","auth","login"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"umkhalil1170@gmail.com\",\n  \"password\": \"Admin123!\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Login as Demo (Employee)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var json = pm.response.json();",
+                  "if (json && json.data && json.data.token) {",
+                  "    pm.collectionVariables.set('token', json.data.token);",
+                  "    console.log('JWT saved to {{token}}');",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/auth/login", "host": ["{{baseUrl}}"], "path": ["api","v1","auth","login"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"demo@scantrak.com\",\n  \"password\": \"Admin123!\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Verify Email",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/v1/auth/verify?token=REPLACE_WITH_TOKEN", "host": ["{{baseUrl}}"], "path": ["api","v1","auth","verify"], "query": [{ "key": "token", "value": "REPLACE_WITH_TOKEN" }] }
+          }
+        },
+        {
+          "name": "Forgot Password",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/auth/forgot-password", "host": ["{{baseUrl}}"], "path": ["api","v1","auth","forgot-password"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"emailAddress\": \"newuser@example.com\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Reset Password",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/auth/reset-password?token=REPLACE_WITH_TOKEN", "host": ["{{baseUrl}}"], "path": ["api","v1","auth","reset-password"], "query": [{ "key": "token", "value": "REPLACE_WITH_TOKEN" }] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"password\": \"NewPassword1!\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Change Password",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/auth/change-password", "host": ["{{baseUrl}}"], "path": ["api","v1","auth","change-password"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"oldPass\": \"Admin123!\",\n  \"newPass\": \"NewPassword1!\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Profile",
+      "item": [
+        {
+          "name": "Get My Profile",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/v1/profile/me", "host": ["{{baseUrl}}"], "path": ["api","v1","profile","me"] }
+          }
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/profile/1", "host": ["{{baseUrl}}"], "path": ["api","v1","profile","1"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Khalil\",\n  \"lastName\": \"Updated\",\n  \"phoneNumber\": 5551234567\n}"
+            }
+          }
+        },
+        {
+          "name": "Upload Profile Image",
+          "request": {
+            "method": "PUT",
+            "url": { "raw": "{{baseUrl}}/api/v1/profile/1/image", "host": ["{{baseUrl}}"], "path": ["api","v1","profile","1","image"] },
+            "body": {
+              "mode": "formdata",
+              "formdata": [{ "key": "image", "type": "file", "src": "/path/to/image.jpg" }]
+            }
+          }
+        },
+        {
+          "name": "Get Profile Image",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/v1/profile/1/image", "host": ["{{baseUrl}}"], "path": ["api","v1","profile","1","image"] }
+          }
+        },
+        {
+          "name": "Assign Manager (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/profile/2/manager", "host": ["{{baseUrl}}"], "path": ["api","v1","profile","2","manager"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"managerId\": 1\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Leave Types",
+      "item": [
+        {
+          "name": "Get All Leave Types",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/v1/leave-types", "host": ["{{baseUrl}}"], "path": ["api","v1","leave-types"] }
+          }
+        },
+        {
+          "name": "Get Leave Type by ID",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/v1/leave-types/1", "host": ["{{baseUrl}}"], "path": ["api","v1","leave-types","1"] }
+          }
+        },
+        {
+          "name": "Create Leave Type (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/leave-types", "host": ["{{baseUrl}}"], "path": ["api","v1","leave-types"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Maternity Leave\",\n  \"defaultDays\": 90\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Leave Type (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/leave-types/1", "host": ["{{baseUrl}}"], "path": ["api","v1","leave-types","1"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Annual Leave\",\n  \"defaultDays\": 25\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Leave Type (Admin)",
+          "request": {
+            "method": "DELETE",
+            "url": { "raw": "{{baseUrl}}/api/v1/leave-types/4", "host": ["{{baseUrl}}"], "path": ["api","v1","leave-types","4"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Leave Requests",
+      "item": [
+        {
+          "name": "Submit Leave Request",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/leave-requests", "host": ["{{baseUrl}}"], "path": ["api","v1","leave-requests"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"leaveTypeId\": 1,\n  \"startDate\": \"2026-06-01\",\n  \"endDate\": \"2026-06-07\",\n  \"reason\": \"Summer vacation\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get Leave Requests (mine or all)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/v1/leave-requests", "host": ["{{baseUrl}}"], "path": ["api","v1","leave-requests"] }
+          }
+        },
+        {
+          "name": "Get My Team's Requests",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/v1/leave-requests/my-team", "host": ["{{baseUrl}}"], "path": ["api","v1","leave-requests","my-team"] }
+          }
+        },
+        {
+          "name": "Get Leave Request by ID",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/v1/leave-requests/1", "host": ["{{baseUrl}}"], "path": ["api","v1","leave-requests","1"] }
+          }
+        },
+        {
+          "name": "Update Pending Leave Request",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/leave-requests/1", "host": ["{{baseUrl}}"], "path": ["api","v1","leave-requests","1"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"startDate\": \"2026-06-02\",\n  \"endDate\": \"2026-06-08\",\n  \"reason\": \"Updated reason\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Cancel Leave Request",
+          "request": {
+            "method": "DELETE",
+            "url": { "raw": "{{baseUrl}}/api/v1/leave-requests/1", "host": ["{{baseUrl}}"], "path": ["api","v1","leave-requests","1"] }
+          }
+        },
+        {
+          "name": "Approve Leave Request (Hasan pending #1)",
+          "request": {
+            "method": "POST",
+            "url": { "raw": "{{baseUrl}}/api/v1/leave-requests/1/approve", "host": ["{{baseUrl}}"], "path": ["api","v1","leave-requests","1","approve"] }
+          }
+        },
+        {
+          "name": "Approve Leave Request (Demo pending #5)",
+          "request": {
+            "method": "POST",
+            "url": { "raw": "{{baseUrl}}/api/v1/leave-requests/5/approve", "host": ["{{baseUrl}}"], "path": ["api","v1","leave-requests","5","approve"] }
+          }
+        },
+        {
+          "name": "Reject Leave Request (Hasan pending #1)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/leave-requests/1/reject", "host": ["{{baseUrl}}"], "path": ["api","v1","leave-requests","1","reject"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"Team is fully staffed during this period\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get Leave Request — Approved #2 (Hasan sick)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/v1/leave-requests/2", "host": ["{{baseUrl}}"], "path": ["api","v1","leave-requests","2"] }
+          }
+        },
+        {
+          "name": "Get Leave Request — Rejected #3 (Hasan annual)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/v1/leave-requests/3", "host": ["{{baseUrl}}"], "path": ["api","v1","leave-requests","3"] }
+          }
+        },
+        {
+          "name": "Get Leave Request — Cancelled #4 (Hasan emergency)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/v1/leave-requests/4", "host": ["{{baseUrl}}"], "path": ["api","v1","leave-requests","4"] }
+          }
+        },
+        {
+          "name": "Get Leave Request — Pending #5 (Demo sick)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/v1/leave-requests/5", "host": ["{{baseUrl}}"], "path": ["api","v1","leave-requests","5"] }
+          }
+        },
+        {
+          "name": "Get Logs for Request #2 (approved)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/v1/leave-logs/2", "host": ["{{baseUrl}}"], "path": ["api","v1","leave-logs","2"] }
+          }
+        },
+        {
+          "name": "Get Logs for Request #3 (rejected)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/v1/leave-logs/3", "host": ["{{baseUrl}}"], "path": ["api","v1","leave-logs","3"] }
+          }
+        },
+        {
+          "name": "Get Logs for Request #4 (cancelled)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/v1/leave-logs/4", "host": ["{{baseUrl}}"], "path": ["api","v1","leave-logs","4"] }
+          }
+        },
+        {
+          "name": "Get Logs for Request #5 (Demo pending)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/v1/leave-logs/5", "host": ["{{baseUrl}}"], "path": ["api","v1","leave-logs","5"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Leave Logs",
+      "item": [
+        {
+          "name": "Get All Logs (Admin)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/v1/leave-logs", "host": ["{{baseUrl}}"], "path": ["api","v1","leave-logs"] }
+          }
+        },
+        {
+          "name": "Get Logs for Request",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/v1/leave-logs/1", "host": ["{{baseUrl}}"], "path": ["api","v1","leave-logs","1"] }
+          }
+        }
+      ]
+    }
+  ]
+}
